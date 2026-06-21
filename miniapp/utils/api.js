@@ -1,4 +1,4 @@
-const API = 'https://43.136.44.88/api';
+const API = 'http://43.136.44.88/api';
 
 function request(method, path, data) {
   return new Promise((resolve, reject) => {
