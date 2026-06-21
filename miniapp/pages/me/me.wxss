@@ -1,0 +1,140 @@
+/* 我的页面 */
+.page-bg {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #EDF2F4 0%, #F5F3EF 100%);
+}
+
+/* 统计卡片 */
+.stats-card {
+  display: flex;
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+  border-radius: 24rpx;
+  padding: 40rpx 20rpx;
+  margin-bottom: 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.04);
+}
+
+.stat-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+}
+
+.stat-num {
+  font-size: 48rpx;
+  font-weight: 200;
+  color: #4A90A4;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.stat-divider {
+  width: 1rpx;
+  background: rgba(0,0,0,0.06);
+  align-self: stretch;
+}
+
+/* 标题 */
+.section-title {
+  font-size: 26rpx;
+  color: #999;
+  margin-bottom: 16rpx;
+  padding-left: 8rpx;
+}
+
+/* 设置卡片 */
+.settings-card {
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+  border-radius: 24rpx;
+  padding: 8rpx 32rpx;
+  margin-bottom: 32rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.04);
+}
+
+.setting-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28rpx 0;
+}
+
+.setting-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6rpx;
+}
+
+.setting-label {
+  font-size: 30rpx;
+  color: #2C2C2C;
+}
+
+.setting-desc {
+  font-size: 24rpx;
+  color: #bbb;
+}
+
+.time-row {
+  padding-top: 0;
+  padding-bottom: 20rpx;
+}
+
+.time-label {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.time-value {
+  font-size: 28rpx;
+  color: #4A90A4;
+  padding: 8rpx 20rpx;
+  background: rgba(74,144,164,0.08);
+  border-radius: 12rpx;
+}
+
+/* 关于 */
+.about-card {
+  background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+  border-radius: 24rpx;
+  padding: 8rpx 32rpx;
+  margin-bottom: 60rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.04);
+}
+
+.about-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 0;
+}
+
+.about-label {
+  font-size: 28rpx;
+  color: #555;
+}
+
+.about-value {
+  font-size: 28rpx;
+  color: #999;
+}
+
+/* 底部文字 */
+.footer-text {
+  text-align: center;
+  font-size: 24rpx;
+  color: #ccc;
+  line-height: 1.8;
+  padding: 40rpx 0;
+}

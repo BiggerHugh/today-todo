@@ -1,0 +1,42 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/voice/voice",
+    "pages/calendar/calendar",
+    "pages/me/me"
+  ],
+  "window": {
+    "navigationBarTitleText": "今日事今日毕",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f5f4f0"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#4A90A4",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "今日",
+        "iconPath": "assets/today.png",
+        "selectedIconPath": "assets/today-active.png"
+      },
+      {
+        "pagePath": "pages/calendar/calendar",
+        "text": "回顾",
+        "iconPath": "assets/calendar.png",
+        "selectedIconPath": "assets/calendar-active.png"
+      },
+      {
+        "pagePath": "pages/me/me",
+        "text": "我的",
+        "iconPath": "assets/me.png",
+        "selectedIconPath": "assets/me-active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

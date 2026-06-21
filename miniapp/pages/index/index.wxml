@@ -1,0 +1,114 @@
+<!-- 今日卡片页 - 首页 -->
+<view class="page-bg" style="background: linear-gradient(180deg, {{bgColor}} 0%, #F5F3EF 40%);">
+  <view class="container fade-in">
+
+    <!-- 顶部：日期区域 -->
+    <view class="header-area">
+      <view class="date-badge">
+        <text class="date-day">{{dayNum}}</text>
+        <view class="date-meta">
+          <text class="date-month">{{monthStr}}</text>
+          <text class="date-week">{{weekStr}}</text>
+        </view>
+      </view>
+      <view class="header-right" bindtap="goHistory">
+        <text class="header-streak" wx:if="{{streak > 0}}">🔥 {{streak}}天</text>
+        <text class="header-hint">日历</text>
+      </view>
+    </view>
+
+    <!-- 问候语 -->
+    <view class="greeting">
+      {{greetingText}}
+    </view>
+
+    <!-- 今日目标卡片列表 -->
+    <view class="goals-section">
+
+      <!-- 有目标 -->
+      <block wx:if="{{goals.length > 0}}">
+        <view 
+          class="goal-card {{item.done ? 'done' : ''}} slide-up" 
+          wx:for="{{goals}}" 
+          wx:key="id"
+          style="animation-delay: {{index * 0.08}}s"
+          data-index="{{index}}"
+          bindlongpress="onLongPress"
+          data-id="{{item.id}}"
+        >
+          <!-- 排序拖拽手柄 -->
+          <view class="goal-handle" catchtouchmove="onHandleMove" data-index="{{index}}">
+            <view class="handle-dots">
+              <view class="dot"></view>
+              <view class="dot"></view>
+              <view class="dot"></view>
+            </view>
+          </view>
+
+          <!-- 内容 -->
+          <view class="goal-content" bindtap="toggleDone" data-id="{{item.id}}">
+            <text class="goal-text">{{item.text}}</text>
+            <text class="goal-time" wx:if="{{item.createdAt}}">{{item.createdAt}}</text>
+          </view>
+
+          <!-- 完成勾选 -->
+          <view class="goal-check" bindtap="toggleDone" data-id="{{item.id}}">
+            <view class="check-circle {{item.done ? 'checked' : ''}}">
+              <text class="check-icon" wx:if="{{item.done}}">✓</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 完成统计 -->
+        <view class="progress-bar" wx:if="{{goals.length > 0}}">
+          <view class="progress-text">{{doneCount}}/{{goals.length}} 已完成</view>
+          <view class="progress-track">
+            <view class="progress-fill" style="width: {{completionPercent}}%;"></view>
+          </view>
+        </view>
+      </block>
+
+      <!-- 空状态 -->
+      <view class="empty-state" wx:else>
+        <view class="empty-illustration">
+          <text class="empty-icon">🌱</text>
+        </view>
+        <view class="empty-text">今天还没有目标</view>
+        <view class="empty-sub">说出你的计划，让今天不一样</view>
+      </view>
+    </view>
+
+    <!-- 语音输入大按钮 -->
+    <view class="voice-cta">
+      <button class="voice-btn" bindtap="goVoice">
+        <view class="voice-btn-icon">
+          <text class="mic-icon">🎙️</text>
+        </view>
+        <text class="voice-btn-text">说出今日目标</text>
+      </button>
+      <view class="voice-hint">也可以打字输入</view>
+    </view>
+
+    <!-- 手动输入（轻量） -->
+    <view class="quick-add" wx:if="{{showInput}}">
+      <input 
+        class="quick-input" 
+        placeholder="手动添加一条目标..." 
+        value="{{inputText}}"
+        bindinput="onInput"
+        bindconfirm="quickAdd"
+        focus="{{inputFocus}}"
+        placeholder-class="input-placeholder"
+      />
+      <view class="quick-actions" wx:if="{{inputText}}">
+        <text class="quick-cancel" bindtap="cancelInput">取消</text>
+        <text class="quick-confirm" bindtap="quickAdd">添加</text>
+      </view>
+    </view>
+
+    <!-- 手动添加小按钮 -->
+    <view class="manual-toggle" bindtap="toggleInput" wx:if="{{!showInput}}">
+      <text>+ 打字输入</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,100 @@
+<!-- 语音录入页 -->
+<view class="page-bg">
+  <view class="container">
+
+    <!-- 顶部导航 -->
+    <view class="nav-bar">
+      <view class="nav-back" bindtap="goBack">← 返回</view>
+      <text class="nav-title">说出今日目标</text>
+      <view class="nav-spacer"></view>
+    </view>
+
+    <!-- 状态指示区 -->
+    <view class="state-area">
+      <!-- 初始状态：还没开始录音 -->
+      <view class="state-initial" wx:if="{{state === 'idle'}}">
+        <view class="pulse-circle">
+          <view class="pulse-outer"></view>
+          <view class="pulse-inner">🎙️</view>
+        </view>
+        <view class="state-text">按住下方按钮，说出你今天想完成的事</view>
+        <view class="state-examples">
+          <view class="example-tag">"今天要写完方案初稿，跑5公里，晚上读半小时书"</view>
+        </view>
+      </view>
+
+      <!-- 录音中 -->
+      <view class="state-recording" wx:if="{{state === 'recording'}}">
+        <view class="recording-wave">
+          <view class="wave-bar" wx:for="{{[1,2,3,4,5,6,7]}}" wx:key="*this" style="animation-delay: {{item * 0.1}}s; height: {{20 + item * 8}}rpx;"></view>
+        </view>
+        <view class="recording-text">正在聆听...</view>
+        <view class="recording-timer">{{recordingTimer}}s</view>
+      </view>
+
+      <!-- AI 提炼中 -->
+      <view class="state-processing" wx:if="{{state === 'processing'}}">
+        <view class="processing-spinner"></view>
+        <view class="state-text">AI 正在帮你提炼目标...</view>
+        <view class="raw-text" wx:if="{{rawText}}">"{{rawText}}"</view>
+      </view>
+
+      <!-- 提炼完成：展示卡片 -->
+      <view class="state-result" wx:if="{{state === 'done'}}">
+        <view class="result-hint">AI 从你的话中提炼了以下目标，点击可修改</view>
+        
+        <view class="goal-card" wx:for="{{refinedGoals}}" wx:key="index" data-index="{{index}}" bindtap="editGoal">
+          <view class="goal-index">{{index + 1}}</view>
+          <input 
+            class="goal-edit-input" 
+            value="{{item}}" 
+            data-index="{{index}}"
+            bindinput="onGoalTextChange"
+          />
+          <view class="goal-delete" catchtap="removeGoal" data-index="{{index}}">✕</view>
+        </view>
+
+        <!-- 手动新增一条 -->
+        <view class="add-goal-btn" bindtap="addEmptyGoal">
+          <text>+ 添加一条</text>
+        </view>
+      </view>
+
+      <!-- 错误状态 -->
+      <view class="state-error" wx:if="{{state === 'error'}}">
+        <view class="error-icon">😔</view>
+        <view class="error-text">{{errorMsg}}</view>
+        <view class="retry-btn" bindtap="resetState">重新来</view>
+      </view>
+    </view>
+
+    <!-- 底部操作区 -->
+    <view class="action-area">
+      <!-- 录音按钮 -->
+      <button 
+        class="record-btn {{state === 'recording' ? 'recording' : ''}}"
+        wx:if="{{state === 'idle' || state === 'recording'}}"
+        bindtouchstart="startRecord"
+        bindtouchend="stopRecord"
+        disabled="{{recorderDisabled}}"
+      >
+        <text wx:if="{{state === 'idle'}}">按住 说话</text>
+        <text wx:if="{{state === 'recording'}}">松手 结束</text>
+      </button>
+
+      <!-- 完成按钮 -->
+      <button 
+        class="confirm-btn"
+        wx:if="{{state === 'done'}}"
+        bindtap="confirmGoals"
+      >
+        <text>确认添加（{{validGoalCount}}条）</text>
+      </button>
+
+      <!-- 重新开始 -->
+      <view class="redo-hint" wx:if="{{state === 'done'}}" bindtap="resetState">
+        ← 重新说一次
+      </view>
+    </view>
+  </view>
+</view>

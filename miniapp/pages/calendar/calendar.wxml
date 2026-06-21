@@ -1,0 +1,71 @@
+<!-- 日历回顾页 -->
+<view class="page-bg">
+  <view class="container fade-in">
+
+    <!-- 月份切换 -->
+    <view class="month-nav">
+      <view class="nav-arrow" bindtap="prevMonth">←</view>
+      <view class="month-title">{{year}}年 {{month}}月</view>
+      <view class="nav-arrow" bindtap="nextMonth">→</view>
+    </view>
+
+    <!-- 周标题 -->
+    <view class="week-header">
+      <text wx:for="{{['日','一','二','三','四','五','六']}}" wx:key="*this" class="week-item">{{item}}</text>
+    </view>
+
+    <!-- 日期网格 -->
+    <view class="date-grid">
+      <view 
+        class="date-cell {{item.empty ? 'empty' : ''}} {{item.isToday ? 'today' : ''}}"
+        wx:for="{{dates}}"
+        wx:key="index"
+        data-date="{{item.date}}"
+        bindtap="selectDate"
+      >
+        <view class="cell-inner" wx:if="{{!item.empty}}">
+          <text class="cell-day">{{item.day}}</text>
+          <!-- 完成度指示 -->
+          <view class="cell-dots" wx:if="{{item.rate >= 0}}">
+            <view class="dot" wx:if="{{item.rate > 0}}" style="background: {{item.rate === 100 ? '#4A90A4' : '#A8C8D2'}};"></view>
+            <view class="dot" wx:if="{{item.rate > 50}}"></view>
+            <view class="dot" wx:if="{{item.rate === 100}}"></view>
+          </view>
+          <!-- 无目标 -->
+          <view class="cell-empty-dot" wx:if="{{item.rate === -1}}"></view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 选中日期的目标详情 -->
+    <view class="date-detail" wx:if="{{selectedDate}}">
+      <view class="detail-header">
+        <text class="detail-date">{{selectedDateText}}</text>
+        <text class="detail-rate" wx:if="{{selectedGoals.length > 0}}">
+          {{selectedDone}}/{{selectedGoals.length}} 完成
+        </text>
+      </view>
+
+      <!-- 有目标 -->
+      <view class="detail-goals" wx:if="{{selectedGoals.length > 0}}">
+        <view 
+          class="mini-goal {{item.done ? 'done' : ''}}"
+          wx:for="{{selectedGoals}}"
+          wx:key="id"
+        >
+          <view class="mini-check {{item.done ? 'checked' : ''}}">
+            <text wx:if="{{item.done}}">✓</text>
+          </view>
+          <text class="mini-text">{{item.text}}</text>
+        </view>
+      </view>
+
+      <!-- 无目标 -->
+      <view class="detail-empty" wx:else>
+        <text class="empty-icon">📭</text>
+        <text class="empty-hint">这天没有记录的目标</text>
+      </view>
+    </view>
+
+  </view>
+</view>
