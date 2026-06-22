@@ -1,4 +1,4 @@
-const API = 'https://todaydone.cloud/api';
+const API = 'http://todaydone.cloud/api';
 
 function request(method, path, data) {
   return new Promise((resolve, reject) => {
