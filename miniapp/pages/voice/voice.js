@@ -71,38 +71,22 @@ Page({
     this.recorderManager.stop();
   },
 
-  // 语音识别（使用微信云开发的语音识别，或降级走文本方案）
+  // 语音识别（当前版本：录音完成 → 手动输入文本 → AI 提炼）
   doSpeechRecognition(filePath) {
     this.setData({ state: 'processing' });
-
-    // 方案：微信基础库 2.33+ 支持语音识别插件
-    // 这里先用微信同声传译插件，如果不可用则提示用户手动输入
-    const plugin = requirePlugin('WechatSI');
-    if (plugin && plugin.manager) {
-      plugin.manager.onRecognize = (res) => {
-        console.log('识别中间结果', res);
-      };
-      plugin.manager.onStart = () => {
-        console.log('开始识别');
-      };
-      plugin.manager.onError = (err) => {
-        console.error('识别失败', err);
-        this.fallbackToManual();
-      };
-      plugin.manager.onStop = (res) => {
-        const text = (res.result || '').replace(/[。，、]/g, ' ').trim();
-        if (text) {
-          this.setData({ rawText: text });
-          this.doAIRefine(text);
-        } else {
-          this.fallbackToManual();
+    // 录音已完成，引导用户手动输入文本后由 AI 提炼
+    wx.showModal({
+      title: '录音完成',
+      content: '请描述你今天的目标，AI 会帮你提炼',
+      editable: false,
+      placeholderText: '',
+      success: (res) => {
+        if (res.confirm) {
+          // 引导回首页通过输入框添加
+          wx.navigateBack();
         }
-      };
-      plugin.manager.speechToText(filePath);
-    } else {
-      // 插件不可用：降级到手动输入
-      this.fallbackToManual();
-    }
+      },
+    });
   },
 
   // 降级：引导用户手动输入

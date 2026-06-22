@@ -10,6 +10,7 @@ function request(method, path, data) {
       method,
       header: { 'Content-Type': 'application/json' },
       data: data ? { ...data, openid } : { openid },
+      timeout: 10000,
       success: res => {
         if (res.statusCode === 200) {
           resolve(res.data);
