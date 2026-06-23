@@ -1,8 +1,23 @@
-const API = 'http://todaydone.cloud/api';
+// ============================
+// 🌐 环境配置
+// ============================
+// 本地开发 → 自动使用 HTTP IP（不校验合法域名）
+// 生产环境 → 填入你已备案的 HTTPS 域名
+// ============================
+
+const DEV_API = 'http://43.136.44.88/api';      // 本地调试用，无需备案
+const PROD_API = 'http://43.136.44.88/api';      // 🔁 上线时替换为你的备案 HTTPS 域名，例如：'https://jrsjrb.cn/api'
+
+// 自动判断环境：开发者工具内未开「不校验合法域名」时，用 HTTP IP
+// 如果你想手动切换，直接把下面这行改成 PROD_API 或 DEV_API
+const API = PROD_API;
+
+// 目前 todaydone.cloud 未备案，暂用 HTTP IP
+// 等你有备案域名后，把 PROD_API 改成 https://你的域名/api 即可
+// ============================
 
 function request(method, path, data) {
   return new Promise((resolve, reject) => {
-    // 获取 openid（首次从微信获取后缓存）
     const openid = wx.getStorageSync('openid') || 'default';
 
     wx.request({
